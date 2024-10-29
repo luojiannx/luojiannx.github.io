@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>arduino uno r3驱动直流电机 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="用deepseek几乎是一次性的通过了。但不知道为什么引脚对应错了，13号引脚才是ena！所以我所作的改动就是把下面第一行代码和第三行代码的13和11互换。然后就编译通过，并且功能正常。 要在Arduino Uno R3上通过L298N电机驱动模块控制直流电机的正转、反转和PWM调速，你可以使用以下C语言代码。假设你已经将Arduino的11、12、13号引脚分别连接到L298N的IN1、IN2和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="arduino uno r3驱动直流电机">
+<meta property="og:url" content="http://luojiannx.github.io/2024/10/29/arduino-uno-r3%E9%A9%B1%E5%8A%A8%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="用deepseek几乎是一次性的通过了。但不知道为什么引脚对应错了，13号引脚才是ena！所以我所作的改动就是把下面第一行代码和第三行代码的13和11互换。然后就编译通过，并且功能正常。 要在Arduino Uno R3上通过L298N电机驱动模块控制直流电机的正转、反转和PWM调速，你可以使用以下C语言代码。假设你已经将Arduino的11、12、13号引脚分别连接到L298N的IN1、IN2和">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-10-29T10:57:44.000Z">
+<meta property="article:modified_time" content="2024-10-29T11:38:56.574Z">
+<meta property="article:author" content="luojiannx">
+<meta property="article:tag" content="arduino unuo r3 直流电机">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://luojiannx.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-arduino-uno-r3驱动直流电机" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2024/10/29/arduino-uno-r3%E9%A9%B1%E5%8A%A8%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA/" class="article-date">
+  <time class="dt-published" datetime="2024-10-29T10:57:44.000Z" itemprop="datePublished">2024-10-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      arduino uno r3驱动直流电机
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>用deepseek几乎是一次性的通过了。但不知道为什么引脚对应错了，13号引脚才是ena！所以我所作的改动就是把下面第一行代码和第三行代码的13和11互换。然后就编译通过，并且功能正常。</p>
+<p>要在Arduino Uno R3上通过L298N电机驱动模块控制直流电机的正转、反转和PWM调速，你可以使用以下C语言代码。假设你已经将Arduino的11、12、13号引脚分别连接到L298N的IN1、IN2和ENA引脚。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义引脚</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> in1 = <span class="number">13</span>;  <span class="comment">// L298N的IN1引脚连接到Arduino的13号引脚</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> in2 = <span class="number">12</span>;  <span class="comment">// L298N的IN2引脚连接到Arduino的12号引脚</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> ena = <span class="number">11</span>;  <span class="comment">// L298N的ENA引脚连接到Arduino的11号引脚</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">setup</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="comment">// 设置引脚模式</span></span><br><span class="line">  pinMode(in1, OUTPUT);</span><br><span class="line">  pinMode(in2, OUTPUT);</span><br><span class="line">  pinMode(ena, OUTPUT);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">loop</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="comment">// 正转</span></span><br><span class="line">  digitalWrite(in1, HIGH);</span><br><span class="line">  digitalWrite(in2, LOW);</span><br><span class="line">  analogWrite(ena, <span class="number">255</span>);  <span class="comment">// 全速正转</span></span><br><span class="line">  delay(<span class="number">2000</span>);  <span class="comment">// 正转2秒</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 停止</span></span><br><span class="line">  digitalWrite(in1, LOW);</span><br><span class="line">  digitalWrite(in2, LOW);</span><br><span class="line">  delay(<span class="number">1000</span>);  <span class="comment">// 停止1秒</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 反转</span></span><br><span class="line">  digitalWrite(in1, LOW);</span><br><span class="line">  digitalWrite(in2, HIGH);</span><br><span class="line">  analogWrite(ena, <span class="number">128</span>);  <span class="comment">// 半速反转</span></span><br><span class="line">  delay(<span class="number">2000</span>);  <span class="comment">// 反转2秒</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 停止</span></span><br><span class="line">  digitalWrite(in1, LOW);</span><br><span class="line">  digitalWrite(in2, LOW);</span><br><span class="line">  delay(<span class="number">1000</span>);  <span class="comment">// 停止1秒</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// PWM调速</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> speed = <span class="number">0</span>; speed &lt;= <span class="number">255</span>; speed += <span class="number">10</span>) &#123;</span><br><span class="line">    analogWrite(ena, speed);  <span class="comment">// 逐渐加速</span></span><br><span class="line">    delay(<span class="number">100</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> speed = <span class="number">255</span>; speed &gt;= <span class="number">0</span>; speed -= <span class="number">10</span>) &#123;</span><br><span class="line">    analogWrite(ena, speed);  <span class="comment">// 逐渐减速</span></span><br><span class="line">    delay(<span class="number">100</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 停止</span></span><br><span class="line">  digitalWrite(in1, LOW);</span><br><span class="line">  digitalWrite(in2, LOW);</span><br><span class="line">  delay(<span class="number">1000</span>);  <span class="comment">// 停止1秒</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码说明："><a href="#代码说明：" class="headerlink" title="代码说明："></a>代码说明：</h3><ol>
+<li><p><strong>引脚定义</strong>：</p>
+<ul>
+<li><code>in1</code> 和 <code>in2</code> 用于控制电机的方向。</li>
+<li><code>ena</code> 用于控制电机的速度（PWM调速）。</li>
+</ul>
+</li>
+<li><p><strong>setup()函数</strong>：</p>
+<ul>
+<li>设置 <code>in1</code>、<code>in2</code> 和 <code>ena</code> 引脚为输出模式。</li>
+</ul>
+</li>
+<li><p><strong>loop()函数</strong>：</p>
+<ul>
+<li><strong>正转</strong>：将 <code>in1</code> 设置为 <code>HIGH</code>，<code>in2</code> 设置为 <code>LOW</code>，并通过 <code>analogWrite(ena, 255)</code> 全速正转。</li>
+<li><strong>停止</strong>：将 <code>in1</code> 和 <code>in2</code> 都设置为 <code>LOW</code>，电机停止。</li>
+<li><strong>反转</strong>：将 <code>in1</code> 设置为 <code>LOW</code>，<code>in2</code> 设置为 <code>HIGH</code>，并通过 <code>analogWrite(ena, 128)</code> 半速反转。</li>
+<li><strong>PWM调速</strong>：通过 <code>analogWrite(ena, speed)</code> 逐渐增加和减少速度，实现电机的加速和减速。</li>
+</ul>
+</li>
+</ol>
+<h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h3><ul>
+<li><code>analogWrite(ena, speed)</code> 中的 <code>speed</code> 值范围是 0 到 255，其中 0 表示停止，255 表示全速。</li>
+<li>你可以根据需要调整 <code>delay()</code> 的时间来改变电机的运行时间。</li>
+</ul>
+<p>这段代码可以实现电机的正转、反转和PWM调速控制，你可以根据实际需求进行修改和扩展。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://luojiannx.github.io/2024/10/29/arduino-uno-r3%E9%A9%B1%E5%8A%A8%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA/" data-id="cm2udlpyi000014vu9mk2070h" data-title="arduino uno r3驱动直流电机" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/arduino-unuo-r3-%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA/" rel="tag">arduino unuo r3 直流电机</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2024/10/29/hexo-%E5%85%8B%E9%9A%86master%E5%88%86%E6%94%AF/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          hexo 克隆master分支
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2024/07/14/ngspice%E5%85%A5%E9%97%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ngspice入门</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/arduino-unuo-r3-%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA/" rel="tag">arduino unuo r3 直流电机</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo-github-git/" rel="tag">hexo github git</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/arduino-unuo-r3-%E7%9B%B4%E6%B5%81%E7%94%B5%E6%9C%BA/" style="font-size: 10px;">arduino unuo r3 直流电机</a> <a href="/tags/hexo-github-git/" style="font-size: 10px;">hexo github git</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">October 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">July 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/10/29/back-up-%E6%95%B4%E4%B8%AAhexo-blog/">back up 整个hexo blog</a>
+          </li>
+        
+          <li>
+            <a href="/2024/10/29/hexo-git/">如何让hexo在多台电脑上同时使用</a>
+          </li>
+        
+          <li>
+            <a href="/2024/10/29/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2024/10/29/ubuntu22-04%E5%8D%87%E7%BA%A7%E5%88%B024-04%E8%A6%81%E6%80%8E%E6%A0%B7%E5%81%9A%EF%BC%9F/">ubuntu22.04升级到24.04要怎样做？</a>
+          </li>
+        
+          <li>
+            <a href="/2024/10/29/hexo-%E5%85%8B%E9%9A%86master%E5%88%86%E6%94%AF/">hexo 克隆master分支</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 luojiannx<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
